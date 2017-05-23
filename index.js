@@ -4,7 +4,8 @@ const extract = require('./extract');
 const wss = require('./websockets-server');
 
 var handleError = function (err, res) {
-  res.writeHead(404);
+  res.write('The page you are looking for is not found. Try going to localhost:3000');
+  // res.writeContinue(404);
   res.end();
 };
 
