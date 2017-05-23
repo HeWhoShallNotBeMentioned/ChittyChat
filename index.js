@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const extract = require('./extract');
 const wss = require('./websockets-server');
+const mime = require('mime');
 
 var handleError = function (err, res) {
   res.setHeader('Content-Type', 'text/html');
@@ -23,5 +24,6 @@ var server = http.createServer(function (req, res) {
         res.end(data);
       }
   });
+  console.log("mimetype:  ", mime.lookup('index.js'));
 });
 server.listen(3000);
