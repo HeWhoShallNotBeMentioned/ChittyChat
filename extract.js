@@ -1,7 +1,8 @@
 const path = require('path');
+let filePath;
 
 let extractFilePath = function (url) {
-  let filePath;
+
   let fileName = 'index.html';
 
   if (url.length > 1) {

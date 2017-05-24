@@ -3,6 +3,7 @@ const fs = require('fs');
 const extract = require('./extract');
 const wss = require('./websockets-server');
 const mime = require('mime');
+const path = require('path');
 
 var handleError = function (err, res) {
   res.setHeader('Content-Type', 'text/html');
@@ -15,15 +16,21 @@ var server = http.createServer(function (req, res) {
   console.log('Responding to a request');
 
   var filePath = extract(req.url);
+
+
+  let dataType = path.extname(filePath);
+  console.log("dataType:  ", dataType);
+  let mimeLookup = mime.lookup(dataType);
+  console.log("mimeLookup:  ", mimeLookup);
   fs.readFile(filePath, function(err, data){
     if (err) {
       handleError(err, res);
       return;
     } else {
-        res.setHeader('Content-Type', 'text/html');
+        res.setHeader('Content-Type', mimeLookup);
         res.end(data);
       }
   });
-  console.log("mimetype:  ", mime.lookup('index.js'));
+
 });
 server.listen(3000);
